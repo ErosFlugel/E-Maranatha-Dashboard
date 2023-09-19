@@ -1,17 +1,14 @@
 import React from "react";
-import MainRight from "./MainRight/MainRight.jsx";
-import TableMain from "./TableMain/TableMain";
-import MainLeft from "./MainLeft/MainLeft.jsx";
+import MainCard from "./MainCard/MainCard.jsx";
 
-function ContentRowMain() {
+function ContentRowMain({lastProduct, lastUser}) {
+
     return (
         <div className="row">
 
-            <MainLeft />
+            <MainCard img={lastProduct ? lastProduct.image[0] : ''} name={lastProduct ? lastProduct.nombre : ""} detail={lastProduct ? lastProduct.detalle : ''} title="producto"/>
 
-            <MainRight />
-
-            <TableMain />
+            <MainCard img={lastUser ? lastUser.img : ''} name={lastUser ? lastUser.name : ""} detail={lastUser ? lastUser.email : ''} title="usuario"/>
         </div>
     )
 };

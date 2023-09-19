@@ -1,9 +1,8 @@
 import React from "react";
-import PropTypes from 'prop-types'
 
-function ContentRowMovie (props) {
+function CardTop (props) {
     return (
-        <div className="col-md-4 mb-4">
+        // <div className="col-md-4 mb-4">
             <div className={`card border-left-${props.border} shadow h-100 py-2`}>
                 <div className="card-body">
                     <div className="row no-gutters align-items-center">
@@ -17,22 +16,8 @@ function ContentRowMovie (props) {
                     </div>
                 </div>
             </div>
-        </div>
+        // </div>
     );
 };
 
-ContentRowMovie.propTypes = {
-    name: PropTypes.string.isRequired,
-    quantity: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
-    border: PropTypes.string.isRequired,
-    icon: PropTypes.string.isRequired
-};
-
-ContentRowMovie.defaultProps = {
-    name: 'Movies in Data Base',
-    quantity: 21,
-    border: 'primary',
-    icon: 'fa-film'
-};
-
-export default ContentRowMovie
+export default CardTop

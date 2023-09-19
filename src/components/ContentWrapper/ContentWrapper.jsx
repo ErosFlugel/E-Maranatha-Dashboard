@@ -4,7 +4,7 @@ import TopBar from './TopBar/TopBar.jsx'
 import ContentRowTop from './RowTop/ContentRowTop.jsx'
 import ContentRowMain from './Main/ContentRowMain.jsx'
 
-function ContentWrapper() {
+function ContentWrapper({users, products, lastProduct}) {
     return (
         <div id="content-wrapper" className="d-flex flex-column">
 
@@ -17,10 +17,10 @@ function ContentWrapper() {
 						<h1 className="h3 mb-0 text-gray-800">App Dashboard</h1>
 					</div>
 
-                    <ContentRowTop />
+                    <ContentRowTop users={users} products={products.meta}/>
 	
 
-					<ContentRowMain />
+					<ContentRowMain lastProduct={lastProduct.data} lastUser={users.users && users.users.slice(-1)[0]}/>
 				</div>
 
 			</div>

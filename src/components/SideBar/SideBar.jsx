@@ -1,23 +1,47 @@
-import React from 'react'
-import Logo from '../../assets/images/logo-DH.png'
+import React, {useState, useEffect} from 'react'
+import Logo from '../../assets/images/maranatha_logo.png'
 import LinksComponent from './Links/Links.jsx'
 import {sideLinks} from '../../constants/index.js'
 import {Link, Route, Switch} from 'react-router-dom'
 import ContentWrapper from '../ContentWrapper/ContentWrapper.jsx'
-import TableMain from '../ContentWrapper/Main/TableMain/TableMain.jsx'
-import MainRight from '../ContentWrapper/Main/MainRight/MainRight.jsx'
-import MainLeft from '../ContentWrapper/Main/MainLeft/MainLeft.jsx'
+import MainCard from '../ContentWrapper/Main/MainCard/MainCard.jsx'
+import ProductContentWrapper from '../ProductContentWrapper/ProductContentWrapper'
 import Error404 from '../Error404.jsx'
 
 function SideBar() {
+
+	const [userInfo, setUserInfo] = useState({});
+	const [productInfo, setProductInfo] = useState({data: [], meta: {}});
+	const [lastProductInfo, setLastProductInfo] = useState({});
+
+	async function fetchData (endpoint, setS) {
+
+		const fetchApi = await fetch(endpoint);
+		const data = await fetchApi.json();
+		setS(data);
+	};
+
+	useEffect( e => {
+
+		fetchData('/api/product/', setProductInfo);
+		fetchData('/api/user/', setUserInfo);
+
+	}, []);
+
+	useEffect( e => {
+		if (productInfo.data.length > 0) {
+
+			fetchData(productInfo.data[productInfo.data.length -1].detail , setLastProductInfo)
+		}
+	}, [productInfo]);
 
     return (
 		<>
 			<ul className="navbar-nav bg-gradient-secondary sidebar sidebar-dark accordion" id="accordionSidebar">
 
-				<Link className="sidebar-brand d-flex align-items-center justify-content-center" to="/" >
+				<Link className="sidebar-brand d-flex align-items-center justify-content-center w-100 h-auto p-0" to="/" >
 					<div className="sidebar-brand-icon">
-						<img className="w-100" src={Logo} alt="Digital House"/>
+						<img className="w-50" src={Logo} alt="Digital House"/>
 					</div>
 				</Link>
 
@@ -37,18 +61,19 @@ function SideBar() {
 
 				<hr className="sidebar-divider d-none d-md-block"/>
 			</ul>
+
 			<Switch>
 				<Route path="/" exact>
-					<ContentWrapper/>
+					<ContentWrapper users={userInfo} products={productInfo} lastProduct={lastProductInfo}/>
 				</Route>
 				<Route path="/last" exact>
-					<MainLeft/>
+					<MainCard/>
 				</Route>
 				<Route path="/genres" exact>
-					<MainRight/>
+					<MainCard/>
 				</Route>
-				<Route path="/movies" exact>
-					<TableMain/>
+				<Route path="/products" exact>
+					<ProductContentWrapper products={productInfo}/>
 				</Route>
 				<Route component={Error404} />
 			</Switch>

@@ -11,30 +11,9 @@ export const genres = [
     'Musical'
 ];
 
-export const cards = [
-    {
-        name: 'Movies in Data Base',
-        quantity: 21,
-        border: 'primary',
-        icon: 'fa-film'
-    },
-    {
-        name: 'Total awards',
-        quantity: 79,
-        border: 'success',
-        icon: 'fa-award'
-    },
-    {
-        name: 'Actors quantity',
-        quantity: 49,
-        border: 'warning',
-        icon: 'fa-user'
-    }
-];
-
 export const sideLinks = [
     {
-        name: 'Dashboard - DH movies',
+        name: 'Dashboard - EM cosmetics',
         liClass: 'nav-item active',
         linkClass: 'nav-link',
         iconClass: 'fas fa-fw fa-tachometer-alt',
@@ -55,11 +34,11 @@ export const sideLinks = [
         path: '/genres'
     },
     {
-        name: 'movies',
+        name: 'productos',
         liClass: 'nav-item',
         linkClass: 'nav-link',
         iconClass: 'fas fa-fw fa-table',
-        path: '/movies'
+        path: '/products'
     },
 ];
 
