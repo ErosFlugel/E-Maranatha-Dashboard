@@ -1,6 +1,7 @@
 import Tab from 'react-bootstrap/Tab';
 import Tabs from 'react-bootstrap/Tabs';
 import TableMain from '../TableProducts/TableProducts';
+import AccordionCategory from '../TableCategories/TableCategories';
 
 export default function ProductTabs({products}) {
   return (
@@ -14,13 +15,19 @@ export default function ProductTabs({products}) {
         <TableMain products={products}/>
       </Tab>
       <Tab eventKey="categories" title="Categorias">
-        Tab content for Profile
+
+        {products.meta ? <AccordionCategory categories={products.meta.countByCategory}/> : 'hola'}
+        
       </Tab>
       <Tab eventKey="brands" title="Marcas">
-        Tab content for Loooonger Tab
+        
+        {products.meta ? <AccordionCategory categories={products.meta.countByBrand}/> : 'hola'}
+
       </Tab>
       <Tab eventKey="colors" title="Colores">
-        Tab content for Contact
+
+        {products.meta ? <AccordionCategory categories={products.meta.countByColor}/> : 'hola'}
+        
       </Tab>
     </Tabs>
   );

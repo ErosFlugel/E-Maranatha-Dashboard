@@ -10,9 +10,9 @@ import Error404 from '../Error404.jsx'
 
 function SideBar() {
 
-	const [userInfo, setUserInfo] = useState({});
-	const [productInfo, setProductInfo] = useState({data: [], meta: {}});
-	const [lastProductInfo, setLastProductInfo] = useState({});
+	const [userInfo, setUserInfo] = useState({}); //users list
+	const [productInfo, setProductInfo] = useState({data: []}); // products list
+	const [lastProductInfo, setLastProductInfo] = useState({}); // last product
 
 	async function fetchData (endpoint, setS) {
 
@@ -31,7 +31,7 @@ function SideBar() {
 	useEffect( e => {
 		if (productInfo.data.length > 0) {
 
-			fetchData(productInfo.data[productInfo.data.length -1].detail , setLastProductInfo)
+			fetchData(productInfo.data[productInfo.data.length -1].endpoint , setLastProductInfo)
 		}
 	}, [productInfo]);
 
