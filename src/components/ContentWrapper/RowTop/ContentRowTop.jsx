@@ -7,7 +7,7 @@ function ContentRowTop({users, products}) {
     const cards = [
         {
             name: 'Usuarios',
-            quantity: users.count,
+            quantity: users && users.count,
             border: 'primary',
             icon: 'fa-user',
             link: '/users'

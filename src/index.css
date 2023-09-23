@@ -13,3 +13,7 @@ code {
 .accordion-count {
   right: 90px;
 }
+
+.pointy:hover {
+  cursor: pointer;
+}

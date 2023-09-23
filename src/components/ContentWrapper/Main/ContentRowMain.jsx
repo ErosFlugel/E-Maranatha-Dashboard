@@ -1,14 +1,15 @@
 import React from "react";
 import MainCard from "./MainCard/MainCard.jsx";
+import SkeletonMainCard from "./SkeletonMainCard/SkeletonMainCard.jsx";
 
-function ContentRowMain({lastProduct, lastUser}) {
+function ContentRowMain({lastProduct, lastUser, userModalToggle}) {
 
     return (
-        <div className="row">
+        <div className={lastProduct && lastUser ? 'row' : 'row justify-content-around'}>
 
-            <MainCard img={lastProduct ? lastProduct.image[0] : ''} name={lastProduct ? lastProduct.nombre : ""} detail={lastProduct ? lastProduct.detalle : ''} title="producto"/>
+            {lastProduct ? <MainCard img={lastProduct.image[0]} name={lastProduct.nombre} detail={lastProduct.detalle} title="producto" url={'http://localhost:3009' + lastProduct.detailLink} outPage={true} handlers={userModalToggle}/> : <SkeletonMainCard/>}
 
-            <MainCard img={lastUser ? lastUser.img : ''} name={lastUser ? lastUser.name : ""} detail={lastUser ? lastUser.email : ''} title="usuario"/>
+            {lastUser ? <MainCard img={lastUser.imagen} name={lastUser.nombre} detail={lastUser.email} title="usuario" url={'/users'} outPage={false} userModalToggle={userModalToggle}/> : <SkeletonMainCard/>}
         </div>
     )
 };

@@ -1,7 +1,8 @@
 import Tab from 'react-bootstrap/Tab';
 import Tabs from 'react-bootstrap/Tabs';
-import TableMain from '../TableProducts/TableProducts';
+import TableProducts from '../TableProducts/TableProducts';
 import AccordionCategory from '../TableCategories/TableCategories';
+import Spinner from '../../Spinner/Spinner';
 
 export default function ProductTabs({products}) {
   return (
@@ -12,22 +13,25 @@ export default function ProductTabs({products}) {
       justify
     >
       <Tab eventKey="products" title="Productos">
-        <TableMain products={products}/>
+        <TableProducts products={products}/>
       </Tab>
+
       <Tab eventKey="categories" title="Categorias">
 
-        {products.meta ? <AccordionCategory categories={products.meta.countByCategory}/> : 'hola'}
+        {products.meta ? <AccordionCategory categories={products.meta.countByCategory}/> : <Spinner />}
         
       </Tab>
+
       <Tab eventKey="brands" title="Marcas">
         
-        {products.meta ? <AccordionCategory categories={products.meta.countByBrand}/> : 'hola'}
+        {products.meta ? <AccordionCategory categories={products.meta.countByBrand}/> : <Spinner />}
 
       </Tab>
+      
       <Tab eventKey="colors" title="Colores">
 
-        {products.meta ? <AccordionCategory categories={products.meta.countByColor}/> : 'hola'}
-        
+        {products.meta ? <AccordionCategory categories={products.meta.countByColor}/> : <Spinner />}
+
       </Tab>
     </Tabs>
   );

@@ -20,18 +20,18 @@ export const sideLinks = [
         path: '/'
     },
     {
-        name: 'last Movie',
+        name: 'ventas',
         liClass: 'nav-item',
         linkClass: 'nav-link collapsed',
-        iconClass: 'fas fa-fw fa-folder',
-        path: '/last'
+        iconClass: 'fas fa-fw fa-money-bill-wave',
+        path: '/sells'
     },
     {
-        name: 'genres',
+        name: 'usuarios',
         liClass: 'nav-item',
         linkClass: 'nav-link',
-        iconClass: 'fas fa-fw fa-chart-area',
-        path: '/genres'
+        iconClass: 'fas fa-fw fa-user',
+        path: '/users'
     },
     {
         name: 'productos',

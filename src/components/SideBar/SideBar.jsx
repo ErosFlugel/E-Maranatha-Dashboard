@@ -6,13 +6,21 @@ import {Link, Route, Switch} from 'react-router-dom'
 import ContentWrapper from '../ContentWrapper/ContentWrapper.jsx'
 import MainCard from '../ContentWrapper/Main/MainCard/MainCard.jsx'
 import ProductContentWrapper from '../ProductContentWrapper/ProductContentWrapper'
-import Error404 from '../Error404.jsx'
+import UserContentWrapper from '../UserContentWrapper/UserContentWrapper'
+import Error404 from '../Error404/Error404.jsx'
 
 function SideBar() {
 
-	const [userInfo, setUserInfo] = useState({}); //users list
+	const [userInfo, setUserInfo] = useState({meta: {success: false}}); //users list
 	const [productInfo, setProductInfo] = useState({data: []}); // products list
 	const [lastProductInfo, setLastProductInfo] = useState({}); // last product
+	const [lastUserInfo, setLastUserInfo] = useState({}); // last user
+	const [userDetail, setUserDetail] = useState(false);
+
+	const userModalToggle = () => {
+		console.log(userDetail)
+		setUserDetail(!userDetail);
+	};
 
 	async function fetchData (endpoint, setS) {
 
@@ -34,6 +42,13 @@ function SideBar() {
 			fetchData(productInfo.data[productInfo.data.length -1].endpoint , setLastProductInfo)
 		}
 	}, [productInfo]);
+
+	useEffect( e => {
+		if (userInfo.meta.success) {
+
+			fetchData(userInfo.data.users[userInfo.data.users.length -1].detail , setLastUserInfo)
+		}
+	}, [userInfo]);
 
     return (
 		<>
@@ -64,13 +79,13 @@ function SideBar() {
 
 			<Switch>
 				<Route path="/" exact>
-					<ContentWrapper users={userInfo} products={productInfo} lastProduct={lastProductInfo}/>
+					<ContentWrapper users={userInfo} products={productInfo} lastProduct={lastProductInfo} lastUser={lastUserInfo} userModalToggle={userModalToggle}/>
 				</Route>
-				<Route path="/last" exact>
+				<Route path="/sells" exact>
 					<MainCard/>
 				</Route>
-				<Route path="/genres" exact>
-					<MainCard/>
+				<Route path="/users" exact>
+					<UserContentWrapper users={userInfo} userModalToggle={userModalToggle} modalOpen={userDetail}/>
 				</Route>
 				<Route path="/products" exact>
 					<ProductContentWrapper products={productInfo}/>
