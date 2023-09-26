@@ -28,7 +28,7 @@ function createData(compra, total, fecha, productos, usuario) {
   };
 };
 
-function Row({row, products, userId, userModalToggle}) {
+function Row({row, products, userId, userModalToggle, userActive}) {
   const [open, setOpen] = useState(false);
   return (
     <React.Fragment>
@@ -48,7 +48,7 @@ function Row({row, products, userId, userModalToggle}) {
         <TableCell align="right">{row.total}</TableCell>
         <TableCell align="right">{row.fecha}</TableCell>
         <TableCell align="right">{row.productos}</TableCell>
-        <TableCell align="right"><Link to="/users" onClick={() => userModalToggle(userId)}>{row.usuario}</Link></TableCell>
+        <TableCell align="right">{!userActive ? <Link to="/users" onClick={() => userModalToggle(userId || 0)}>{row.usuario}</Link> : row.usuario}</TableCell>
       </TableRow>
       <TableRow>
         <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
@@ -84,9 +84,10 @@ export default function TableSales({sales, userModalToggle}) {
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row) => (
-            <Row key={row.compra} row={row} products={sales.data.find( sale => sale.id === row.compra).product} userId={sales.data.find( sale => sale.id === row.compra).user.id} userModalToggle={userModalToggle}/>
-          ))}
+          {rows.map((row) => {
+            const allData = sales.data.find( sale => sale.id === row.compra);
+            return <Row key={row.compra} row={row} products={allData.product} userId={allData.user.id} userModalToggle={userModalToggle} userActive={allData.user['deleted-at'] !== null}/>
+          })}
         </TableBody>
       </Table>
     </TableContainer>
