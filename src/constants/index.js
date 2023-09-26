@@ -24,7 +24,7 @@ export const sideLinks = [
         liClass: 'nav-item',
         linkClass: 'nav-link collapsed',
         iconClass: 'fas fa-fw fa-money-bill-wave',
-        path: '/sells'
+        path: '/sales'
     },
     {
         name: 'usuarios',

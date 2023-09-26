@@ -2,7 +2,7 @@ import React from 'react'
 import {Link} from 'react-router-dom'
 import CardTop from './CardTop/CardTop.jsx';
 
-function ContentRowTop({users, products}) {
+function ContentRowTop({users, products, sales}) {
 
     const cards = [
         {
@@ -21,10 +21,10 @@ function ContentRowTop({users, products}) {
         },
         {
             name: 'Ventas',
-            quantity: 49,
+            quantity: sales.meta.success && sales.count,
             border: 'warning',
             icon: 'fa-money-bill-wave',
-            link: '/products/sells'
+            link: '/sales'
         }
     ];
 

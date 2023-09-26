@@ -4,9 +4,9 @@ import LinksComponent from './Links/Links.jsx'
 import {sideLinks} from '../../constants/index.js'
 import {Link, Route, Switch} from 'react-router-dom'
 import ContentWrapper from '../ContentWrapper/ContentWrapper.jsx'
-import MainCard from '../ContentWrapper/Main/MainCard/MainCard.jsx'
 import ProductContentWrapper from '../ProductContentWrapper/ProductContentWrapper'
 import UserContentWrapper from '../UserContentWrapper/UserContentWrapper'
+import SalesContentWrapper from '../SalesContentWrapper/SalesContentWrapper'
 import Error404 from '../Error404/Error404.jsx'
 
 function SideBar() {
@@ -15,24 +15,28 @@ function SideBar() {
 	const [productInfo, setProductInfo] = useState({data: []}); // products list
 	const [lastProductInfo, setLastProductInfo] = useState({}); // last product
 	const [lastUserInfo, setLastUserInfo] = useState({}); // last user
-	const [userDetail, setUserDetail] = useState(false);
+	const [salesInfo, setSalesInfo] = useState({meta: {success: false}}); // sales list
+	const [userDetail, setUserDetail] = useState({modalOn: false, userId: 0}); // user detail modal open
 
-	const userModalToggle = () => {
-		console.log(userDetail)
-		setUserDetail(!userDetail);
+	const userModalToggle = (id) => {
+		setUserDetail({
+			modalOn: !userDetail.modalOn,
+			userId: id
+		});
 	};
 
 	async function fetchData (endpoint, setS) {
 
 		const fetchApi = await fetch(endpoint);
-		const data = await fetchApi.json();
-		setS(data);
+		const result = await fetchApi.json();
+		setS(result);
 	};
 
-	useEffect( e => {
+	useEffect((e) => {
 
 		fetchData('/api/product/', setProductInfo);
 		fetchData('/api/user/', setUserInfo);
+		fetchData('/api/product/sales', setSalesInfo);
 
 	}, []);
 
@@ -79,13 +83,13 @@ function SideBar() {
 
 			<Switch>
 				<Route path="/" exact>
-					<ContentWrapper users={userInfo} products={productInfo} lastProduct={lastProductInfo} lastUser={lastUserInfo} userModalToggle={userModalToggle}/>
+					<ContentWrapper users={userInfo} products={productInfo} lastProduct={lastProductInfo} lastUser={lastUserInfo} sales={salesInfo} userModalToggle={userModalToggle}/>
 				</Route>
-				<Route path="/sells" exact>
-					<MainCard/>
+				<Route path="/sales" exact>
+					<SalesContentWrapper sales={salesInfo} userModalToggle={userModalToggle}/>
 				</Route>
 				<Route path="/users" exact>
-					<UserContentWrapper users={userInfo} userModalToggle={userModalToggle} modalOpen={userDetail}/>
+					<UserContentWrapper users={userInfo} userModalToggle={userModalToggle} userModal={userDetail}/>
 				</Route>
 				<Route path="/products" exact>
 					<ProductContentWrapper products={productInfo}/>

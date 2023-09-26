@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import { styled } from '@mui/material/styles';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -16,7 +16,6 @@ import Modal from '@mui/material/Modal';
 import Typography from '@mui/material/Typography';
 import { useSpring, animated } from '@react-spring/web';
 
-// import ModalUser from './ModalUser/ModalUser';
 
 const moment = require('moment');
 moment.locale('es');
@@ -100,11 +99,10 @@ const style = {
 };
 
 
-export default function UserTable({users, userModalToggle, modalOpen}) {
+export default function UserTable({users, userModalToggle, userModal}) {
 
     const rows = users.map(user => createData(user.id, user.name, user.email, user.phone, user.birth, user['created-at']));
 
-    // console.log(moment(rows[0]).format())
     const [open, setOpen] = useState(false);
     const [userData, setUserData] = useState({});
 
@@ -112,17 +110,19 @@ export default function UserTable({users, userModalToggle, modalOpen}) {
       
       setUserData(users.find(user => user.id === id));
       
-      setOpen(true)
+      setOpen(true);
     
     };
     const handleClose = () => setOpen(false);
 
-    if(modalOpen) {
-      console.log('hola')
-      setUserData(users[-1]);
-      setOpen(true);
-      userModalToggle();
-    };
+    useEffect((e) => {
+
+      if(userModal.modalOn) {
+        setUserData(users.find(user => user.id === userModal.userId));
+        setOpen(true);
+        userModalToggle(0);
+      };
+    }, [userModal, users, userModalToggle]);
 
   return (
     <div>
@@ -175,7 +175,6 @@ export default function UserTable({users, userModalToggle, modalOpen}) {
           </TableHead>
           <TableBody>
             {rows.map((row) => (
-                // <ModalUser key={row.name + row.id} id={row.id} name={row.name} email={row.email} phone={row.phone} birth={row.birth} creation={moment(row.creation).calendar()}>
                   <StyledTableRow key={row.name + row.id} onClick={() => handleOpen(row.id)} className='pointy'>
                     <StyledTableCell component="th" scope="row">
                       {row.id}
@@ -186,7 +185,6 @@ export default function UserTable({users, userModalToggle, modalOpen}) {
                     <StyledTableCell align="center">{row.birth}</StyledTableCell>
                     <StyledTableCell align="center">{moment(row.creation).calendar()}</StyledTableCell>
                   </StyledTableRow>
-                // </ModalUser>
             ))}
           </TableBody>
         </Table>
