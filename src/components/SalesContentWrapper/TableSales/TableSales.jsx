@@ -45,7 +45,7 @@ function Row({row, products, userId, userModalToggle, userActive}) {
         <TableCell component="th" scope="row">
           {row.compra}
         </TableCell>
-        <TableCell align="right">{row.total}</TableCell>
+        <TableCell align="right">${row.total}</TableCell>
         <TableCell align="right">{row.fecha}</TableCell>
         <TableCell align="right">{row.productos}</TableCell>
         <TableCell align="right">{!userActive ? <Link to="/users" onClick={() => userModalToggle(userId || 0)}>{row.usuario}</Link> : row.usuario}</TableCell>
