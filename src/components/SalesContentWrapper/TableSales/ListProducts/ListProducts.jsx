@@ -5,15 +5,13 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
 import { FixedSizeList } from 'react-window';
 
-function renderRow(props) {
-
-    const {index, style} = props;
+function renderRow({data, index, style}) {
 
   return (
     <ListItem style={style} key={index} component="div" disablePadding>
       <ListItemButton>
-        <ListItemText primary={props.data[index].nombre} />
-        <span>{`${props.data[index]['factura_producto'].cantidad} x $${props.data[index].precio}`}</span>
+        <ListItemText primary={data[index].productGroup.nombre} />
+        <span>{`${data[index]['FacturaProducto'].cantidad} x $${data[index].precio}`}</span>
       </ListItemButton>
     </ListItem>
   );
